@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прибрежно-водные растения | Пруда Лесовик</title>
+    <style>
+        :root {
+            --primary: #2c6e36;
+            --secondary: #1a4a24;
+            --accent: #4a9c5c;
+            --light: #f8f9fa;
+            --water: #3a7d8f;
+            --sand: #e9c46a;
+            --dark: #212529;
+            --shadow: 0 4px 8px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background-attachment: fixed;
+        }
+        
+        header {
+            background: linear-gradient(rgba(26, 74, 36, 0.92), rgba(44, 110, 54, 0.95)), url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a4a24"/><path d="M0,50 Q25,35 50,50 T100,50 L100,100 L0,100 Z" fill="%232c6e36" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            opacity: 0.95;
+        }
+        
+        .region-badge {
+            display: inline-block;
+            background: var(--sand);
+            color: var(--secondary);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 1rem;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow);
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links li a:hover, 
+        .nav-links li a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+        
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            width: 70%;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        section {
+            margin-bottom: 3.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: var(--transition);
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--sand);
+            font-size: 2.2rem;
+        }
+        
+        .intro-text {
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+        }
+        
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .plant-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .plant-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .plant-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .plant-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .plant-card:hover .plant-img img {
+            transform: scale(1.05);
+        }
+        
+        .plant-info {
+            padding: 1.5rem;
+        }
+        
+        .plant-name {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .plant-latin {
+            font-style: italic;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        
+        .plant-desc {
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .habitat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+        }
+        
+        .habitat-card {
+            text-align: center;
+            padding: 1.8rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9f5f0 100%);
+            transition: var(--transition);
+        }
+        
+        .habitat-card:hover {
+            background: linear-gradient(135deg, #f0f7f2 0%, #d9ead3 100%);
+            transform: scale(1.03);
+        }
+        
+        .habitat-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--water);
+        }
+        
+        .habitat-title {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(rgba(44, 110, 54, 0.9), rgba(26, 74, 36, 0.95)), url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a4a24"/><circle cx="20" cy="20" r="5" fill="%232c6e36" opacity="0.5"/><circle cx="80" cy="30" r="3" fill="%232c6e36" opacity="0.3"/><circle cx="50" cy="70" r="7" fill="%232c6e36" opacity="0.4"/></svg>');
+            background-size: cover;
+            color: white;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            border-bottom: 2px solid var(--sand);
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-text {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--sand);
+            color: var(--secondary);
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: 2px solid var(--sand);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: var(--sand);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+        
+        footer {
+            background: var(--secondary);
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+            display: block;
+        }
+        
+        .copyright {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.7rem;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+            }
+            
+            .nav-links li a {
+                padding: 0.8rem 1rem;
+                text-align: center;
+            }
+            
+            .plants-grid, .habitat-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .btn {
+                display: block;
+                width: max-content;
+                margin: 1rem auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Прибрежно-водные растения пруда Лесовик</h1>
+            <p class="subtitle">Уникальное разнообразие прибрежной и водной флоры Кемеровской области: от таёжных озёр до горных рек</p>
+            <div class="region-badge">КЕМЕРОВСКАЯ ОБЛАСТЬ • КУЗБАСС</div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#about" class="active">О проекте</a></li>
+                <li><a href="#plants">Растения</a></li>
+                <li><a href="#habitats">Места обитания</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        <section id="about">
+            <h2>Прибрежно-водные растения пруда Лесовик</h2>
+            <p class="intro-text">Кемеровская область, несмотря на отсутствие морского побережья, обладает богатейшим разнообразием водных экосистем: от крупных рек Томь и Кия до бесчисленных таёжных озёр, болот и прудов. Эти водоёмы являются домом для множества видов водных и прибрежных растений, играющих ключевую роль в поддержании экологического баланса региона.</p>
+            <p>На этой странице представлены наиболее характерные виды растений, произрастающих в водных экосистемах Кузбасса.</p>
+        </section>
+        
+        <section id="plants">
+            <h2>Распространённые виды</h2>
+            <div class="plants-grid">
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://avatars.mds.yandex.net/i?id=9099f1f1ffe44672183d7d15f3921516_l-4271783-images-thumbs&n=13" alt="Стрелолист обыкновенный">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Стрелолист обыкновенный</div>
+                        <span class="plant-latin">Sagittaria sagittifolia</span>
+                        <p class="plant-desc">Характерное растение мелководий с листьями в форме стрелы. Цветёт белыми цветками с тремя лепестками. Встречается по берегам рек, озёр и в заболоченных местах Кемеровской области.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://avatars.mds.yandex.net/i?id=69c1da6db6083cc994368fc60aa16325_l-16309777-images-thumbs&n=13" alt="Тростник обыкновенный">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Тростник обыкновенный</div>
+                        <span class="plant-latin">Phragmites australis</span>
+                        <p class="plant-desc">Высокое многолетнее растение высотой до 4 м, образующее густые заросли по берегам водоёмов. Играет важную роль в очистке воды и создании среды обитания для многих животных. Распространён повсеместно в регионе.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://avatars.mds.yandex.net/get-mpic/4375199/2a00000192521976e3a64a49b521531d3032/orig" alt="Ряска трехдольная">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Ряска трехдольная</div>
+                        <span class="plant-latin">Lemna trisulca</span>
+                        <p class="plant-desc">Мелкое плавающее растение с продолговатыми листочками, собранными по 2-5 штук. В отличие от других ряск, не плавает на поверхности, а находится под водой. Обитает в стоячих и медленно текущих водоёмах области.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Spirodela_polyrhiza_01.JPG/1200px-Spirodela_polyrhiza_01.JPG" alt="Ряска многокоренная">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Ряска многокоренная</div>
+                        <span class="plant-latin">Spirodela polyrhiza</span>
+                        <p class="plant-desc">Крупнейший представитель семейства рясковых с тёмно-зелёными листочками и многочисленными корешками. Быстро размножается и образует плотные ковры на поверхности прудов и озёр Кемеровской области.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://avatars.mds.yandex.net/i?id=7d2b4ff9725f359d2216696dfdd4741128aad257-10268314-images-thumbs&n=13" alt="Рдест пронзеннолистный">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Рдест пронзеннолистный</div>
+                        <span class="plant-latin">Potamogeton perfoliatus</span>
+                        <p class="plant-desc">Подводное растение с удлинёнными листьями, охватывающими стебель (пронзёнными). Образует густые подводные заросли в реках и озёрах с чистой водой. Важный компонент водных экосистем региона.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://avatars.mds.yandex.net/get-entity_search/10812459/909715759/S600xU_2x" alt="Телорез обыкновенный">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Телорез обыкновенный</div>
+                        <span class="plant-latin">Hydrocharis morsus-ranae</span>
+                        <p class="plant-desc">Плавающее растение с округлыми листьями и белыми цветками. Образует свободно плавающие розетки на поверхности стоячих водоёмов. Встречается в озёрах и прудах Кемеровской области, предпочитая богатые питательными веществами воды.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://static.auction.ru/offer_images/rd48/2023/10/28/03/big/H/h6DHvnnAWik/flora_cvety_kuvshinki_belosnezhnaja_vodjanaja_lilija_pochta_sssr_10_kop_1984_g_sitall_nechastyj.jpg" alt="Кувшинка белая">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Кувшинка белая</div>
+                        <span class="plant-latin">Nymphaea alba</span>
+                        <p class="plant-desc">Красивое водное растение с крупными белыми цветками и плавающими листьями. Встречается в стоячих водоёмах с чистой водой. Занесена в Красную книгу Кемеровской области как редкий и охраняемый вид.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://avatars.mds.yandex.net/i?id=e843c62334efa5a1060fe498eb1883bf_l-5240239-images-thumbs&n=13" alt="Водокрас лягушачий">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Водокрас лягушачий</div>
+                        <span class="plant-latin">Hydrocharis morsus-ranae</span>
+                        <p class="plant-desc">Небольшое плавающее растение с округлыми листьями и мелкими белыми цветками. Образует свободные розетки на поверхности воды. Распространён в мелких прудах, озёрах и старицах рек Кузбасса.</p>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-img">
+                        <img src="https://www.plantarium.ru/dat/plants/2/242/460242_58341a91.jpg" alt="Осока пузырчатая">
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name">Осока пузырчатая</div>
+                        <span class="plant-latin">Carex vesicaria</span>
+                        <p class="plant-desc">Многолетнее растение с узкими листьями и характерными вздутыми мешочками (пузырями) у основания листьев. Растёт на заболоченных берегах водоёмов и в сырых лугах Кемеровской области.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="habitats">
+            <h2>Места обитания</h2>
+            <div class="habitat-grid">
+                <div class="habitat-card">
+                    <div class="habitat-icon">🌊</div>
+                    <h3 class="habitat-title">Реки и ручьи</h3>
+                    <p>Быстротекущие и спокойные водотоки Кузбасса, такие как Томь, Кия, Кондома, являются домом для многих видов прибрежных растений, адаптированных к постоянному течению.</p>
+                </div>
+                
+                <div class="habitat-card">
+                    <div class="habitat-icon">🏞️</div>
+                    <h3 class="habitat-title">Озёра и пруды</h3>
+                    <p>Стоячие водоёмы, включая озёра Большое и Малое Чебачье, а также многочисленные карьерные озёра, создают идеальные условия для плавающих и подводных растений.</p>
+                </div>
+                
+                <div class="habitat-card">
+                    <div class="habitat-icon">🌿</div>
+                    <h3 class="habitat-title">Болота и топи</h3>
+                    <p>Обширные болотные системы Западной Сибири на территории области поддерживают уникальные сообщества растений, включая осоки, рогоз и различные виды рясковых.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="cta-section">
+            <h2>Присоединяйтесь к сохранению природы Кузбасса!</h2>
+            <p class="cta-text">Вы можете помочь в изучении и сохранении водных растений Кемеровской области. Сообщайте о находках редких видов, участвуйте в экологических акциях или станьте волонтёром природоохранных организаций.</p>
+        </div>
+    </main>
+    
+    <footer id="contact">
+        <div class="footer-content">
+            <span class="footer-logo">Водная флора Кузбасса</span>
+            <p class="copyright">© 2026 Все права защищены. Информация на сайте носит научно-просветительский характер.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Плавная прокрутка к якорям
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Обновление активного пункта меню
+                        document.querySelectorAll('.nav-links a').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+            
+            // Анимация появления карточек при прокрутке
+            const observerOptions = {
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Наблюдение за карточками растений и мест обитания
+            document.querySelectorAll('.plant-card, .habitat-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+            
+            // Обновление активного пункта меню при прокрутке
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section');
+                const scrollPos = window.scrollY + 80;
+                
+                sections.forEach(section => {
+                    if (scrollPos >= section.offsetTop && scrollPos < (section.offsetTop + section.offsetHeight)) {
+                        const id = section.getAttribute('id');
+                        document.querySelectorAll('.nav-links a').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
